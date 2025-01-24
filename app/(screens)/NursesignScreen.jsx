@@ -25,19 +25,18 @@ export default function LoginScreen() {
 
     const handleLogin = async () => {
         try {
-            const response = await axios.post('http://localhost:5000/api/nurses/login', {
+            const response = await axios.post('http://192.168.45.108:5000/api/nurses/login', {
                 id,
                 password
             });
             const data = response.data;
-            console.log('Login response:', response);
             if (response.status === 200) {
                 //extract the JWT token from the response
                 const nursetoken = data.nursetoken;
 
                 // Store the token in AsyncStorage
                 await AsyncStorage.setItem('nursetoken', nursetoken);
-                console.log('Login successful:', response);
+                console.log('Login successful:');
 
                 // Store nurse details in AsyncStorage
                 if (data.nurse) {
@@ -53,38 +52,6 @@ export default function LoginScreen() {
             alert('Something went wrong. Please try again.');
         }
     };
-    //     try {
-    //         const response = await fetch('http://localhost:5000/api/nurses/login', {
-    //             method: 'POST',
-    //             headers: {
-    //                 'Content-Type': 'application/json',
-    //             },
-    //             body: JSON.stringify({ id, password }),
-    //         });
-
-    //         console.log('Login response:', response);
-    //         if (response.status === 200) {
-    //             //extract the JWT token from the response
-    //             const token = response.token;
-
-    //             // Store the token in AsyncStorage
-    //             await AsyncStorage.setItem('token', token);
-
-    //             console.log('Login successful:', response);
-
-    //             // Store nurse details in AsyncStorage
-    //             await AsyncStorage.setItem('nurseDetails', JSON.stringify(response.nurse));
-    //             router.push('/(screens)/nurseScreen');
-    //         } else {
-    //             console.warn('Login failed:', response.message);
-    //             alert(response.message);
-    //         }
-    //     } catch (error) {
-    //         console.error('Error during login:', error);
-    //         alert('Something went wrong. Please try again.');
-    //     }
-    // };
-
     const handleForgotPassword = () => {
         router.push('/(screens)/forgotPasswordScreen');
     };
